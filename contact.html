@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <style type="text/css">
+        /* Reset */
+        body {
+            padding: 0;
+            margin: 0;
+            font-size: 12px;
+            color: #0073ea;
+            font-family: Verdana, Arial, sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6, p {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        button {
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 1em;
+            border: 1px solid #0073ea;
+            border-radius: 4px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            color: #ffffff;
+            background-color: #0073ea;
+        }
+        input, textarea {
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 1em;
+            border: 1px solid #0073ea;
+            padding: 3px 4px;
+            border-radius: 4px;
+        }
+
+        .contact-container {
+            padding: 20px;
+            box-sizing: border-box;
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+        .contact-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .contact-header .back {
+            display: block;
+            height: 36px;
+            width: 36px;
+            line-height: 36px;
+            text-align: center;
+            border: 1px solid #2779aa;
+            color: #2779aa;
+            border-radius: 36px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .contact-header .back:hover {
+            border-color: #0073ea;
+            color: #0073ea;
+        }
+        .contact-title {
+            color: #2779aa;
+            font-size: 16px;
+        }
+
+        .contact-body {
+            display: flex;
+            flex-direction: column;
+            background-color: #f9f9f9;
+            border-radius: 16px;
+            padding: 20px;
+            gap: 32px;
+        }
+        .section-title {
+            font-size: 12px;
+            margin-bottom: 16px;
+        }
+
+        .contact-info-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            gap: 16px;
+        }
+        .contact-info-wrapper .item {
+            flex: 1;
+        }
+        .contact-information .item-group {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            background-color: #ffffff;
+        }
+        .contact-information .item-group-title {
+            margin-bottom: 6px;
+            font-size: 12px;
+            font-weight: normal;
+            color: #2779aa;
+        }
+        .contact-information .item-group .item {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 8px 0;
+            border-top: 1px solid #cce5f7;
+        }
+        .contact-information .item-group .item:first-of-type {
+            border-top: 0;
+        }
+        .contact-information .label {
+            font-weight: normal;
+            width: 84px;
+            opacity: 0.8;
+        }
+        .contact-information .value {
+            flex: 1;
+            word-break: break-all;
+        }
+
+        .credit-report {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 16px;
+            border-radius: 16px;
+            background-color: #ffffff;
+            gap: 20px;
+        }
+        .credit-report .credit-title {
+            font-size: 14px;
+            padding-bottom: 16px;
+        }
+        .pull-credit-wrapper {
+            display: none;
+        }
+        .pull-credit-wrapper.active {
+            display: block;
+        }
+
+        .credit-report-result {
+            flex-direction: column;
+            gap: 20px;
+            display: none;
+        }
+        .credit-report-result.active {
+            display: flex;
+        }
+        .credit-liability-list ul {
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        .credit-liability-list ul li {
+            list-style-type: none;
+            flex: 1;
+            padding: 6px 6px;
+            line-height: 20px;
+            word-break: break-all;
+            text-align: center;
+        }
+        .credit-liability-list .table-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .credit-liability-list .table-header {
+            background-color: #dfeffc;
+            border-radius: 8px;
+        }
+
+        .credit-result-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 16px;
+            border-radius: 16px;
+            background-color: #ffffff;;
+            box-sizing: border-box;
+        }
+        .credit-result-form .form-item {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .credit-result-form .form-item textarea {
+            flex: 1;
+            min-height: 64px;
+            resize: none;
+        }
+
+        .credit-buttons {
+            text-align: right;
+        }
+        .credit-buttons .btn-success {
+            background-color: #66D575;
+            border-color: #66D575;
+        }
+        .credit-buttons .btn-warning {
+            background-color: #FF9E42;
+            border-color: #FF9E42;
+        }
+        .credit-buttons .btn-danger {
+            background-color: #F24822;
+            border-color: #F24822;
+        }
+
+        .pull-credit-modal {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .pull-credit-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .pull-credit-form {
+            width: 320px;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+        .pull-credit-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .pull-credit-form .form-item span {
+            display: block;
+            margin-bottom: 6px;
+        }
+        .pull-credit-form .form-item input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .pull-credit-form .btn-cancel {
+            background-color: #999;
+            border-color: #999;
+        }
+        .pull-credit-form .result-buttons {
+            padding-top: 10px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-container">
+        <div class="contact-header">
+            <a class="back" href="/">&lt;</a>
+            <h2 class="contact-title"> Contact</h2>
+        </div>
+        <div class="contact-body">
+            <div class="contact-information">
+                <h3 class="section-title">Contact Information</h3>
+                <div class="contact-info-wrapper">
+                    <div class="item-group">
+                        <div class="item">
+                            <h4 class="label">First Name</h4>
+                            <p class="value">THOMAS</p>
+                        </div>
+                        <div class="item">
+                            <h4 class="label">Last Name</h4>
+                            <p class="value">DEVOS</p>
+                        </div>
+                        <div class="item">
+                            <h4 class="label">Phone</h4>
+                            <p class="value">4045049006</p>
+                        </div>
+                        <div class="item">
+                            <h4 class="label">Debt Amount</h4>
+                            <p class="value">666023511</p>
+                        </div>
+                    </div>
+                    <div class="item-group">
+                        <div class="item">
+                            <h4 class="label">Street</h4>
+                            <p class="value">1206 BEAR CREEK RD APT 110</p>
+                        </div>
+                        <div class="item">
+                            <h4 class="label">City</h4>
+                            <p class="value">TUSCALOOSA</p>
+                        </div>
+                        <div class="item">
+                            <h4 class="label">State</h4>
+                            <p class="value">AL</p>
+                        </div>
+                        <div class="item">
+                            <h4 class="label">Zip</h4>
+                            <p class="value">35405</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="credit-report-wrapper">
+                <h3 class="section-title">Credit Report</h3>
+                <div class="credit-report">
+                    <!-- Step 1 -->
+                    <div class="pull-credit-wrapper active" id="J_pull_credit_wrapper">
+                        <button type="button" id="J_pull_credit_btn">Pull Credit</button>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div id="J_credit_report_result" class="credit-report-result">
+                        <!-- Score -->
+                        
+                        <!-- Liability -->
+                        <div class="credit-liability-list">
+                            <div class="table-wrapper">
+                                <ul class="table-header">
+                                    <li>AccountNumber</li>
+                                    <li>AccountType</li>
+                                    <li>Balance</li>
+                                    <li>Creditor Name</li>
+                                </ul>
+                                <ul class="table-body">
+                                    <li>6019069092</li>
+                                    <li>Installment</li>
+                                    <li>39613</li>
+                                    <li>UNITED BANK</li>
+                                </ul>
+                                <ul class="table-body">
+                                    <li>3467560356121</li>
+                                    <li>Mortgage</li>
+                                    <li>23951</li>
+                                    <li>BANK OF AMERICA</li>
+                                </ul>
+                                <ul class="table-body">
+                                    <li>6010101042</li>
+                                    <li>Installment</li>
+                                    <li>10108</li>
+                                    <li>UNITED BANK</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="credit-result-form">
+                <h3 class="section-title">Note</h3>
+                <form id="credit_result_form" name="credit_result_form" method="post">
+                    <div class="form-item">
+                        <textarea name="note"></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div class="credit-buttons">
+                <button type="button" class="btn-danger">Not Interested</button>
+                <button type="button" class="btn-warning">Lead Nurture</button>
+                <button type="button" class="btn-success">Send to Back End</button>
+            </div>
+
+
+            <div class="pull-credit-modal" id="J_pull_credit_modal">
+                <div class="pull-credit-form">
+                    <form id="pull_credit_form" name="pull_credit_form" method="post">
+                            <div class="form-item">
+                                <span>SSN</span>
+                                <input type="text" required maxlength="20" name="ssn">
+                            </div>
+                            <div class="form-item">
+                                <span>DOB</span>
+                                <input type="text" required placeholder="MM/DD/YYYY" maxlength="20" name="dob">
+                            </div>
+                        <div class="result-buttons">
+                            <button type="button" class="btn-cancel" id="J_pull_credit_cancel">Cancel</button>
+                            <button type="button" id="J_pull_credit_submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const $J_pull_credit_btn = document.querySelector('#J_pull_credit_btn');
+            const $J_pull_credit_wrapper = document.querySelector('#J_pull_credit_wrapper');
+            const $J_credit_report_result = document.querySelector('#J_credit_report_result');
+            // Modal
+            const $J_pull_credit_modal = document.querySelector('#J_pull_credit_modal');
+            const $J_pull_credit_cancel = document.querySelector('#J_pull_credit_cancel');
+            const $J_pull_credit_submit = document.querySelector('#J_pull_credit_submit');
+
+            // Functions
+            function showModal() {
+                $J_pull_credit_modal.classList.add('active');
+            }
+
+            function hideModal() {
+                $J_pull_credit_modal.classList.remove('active');
+            }
+
+            function showCreditReport() {
+                $J_pull_credit_wrapper.classList.remove('active');
+                $J_credit_report_result.classList.add('active');
+            }
+
+            function validatePullCreditForm() {
+                $form = document.querySelector('#pull_credit_form');
+                const ssn = $form.ssn.value;
+                const dob = $form.dob.value;
+                if(ssn.length === 0) {
+                    alert('Please enter your SSN.');
+                    return false;
+                }
+                if(dob.length === 0) {
+                    alert('Please enter your DOB.');
+                    return false;
+                }
+                const dobReg = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/(19|20)\d{2}$/;
+                if(!dobReg.test(dob)) {
+                    alert('Please enter valid DOB. (MM/DD/YYYY)');
+                    return false;
+                }
+                return true;
+            }
+
+            // Events
+            $J_pull_credit_btn.addEventListener('click', function() {
+                showModal();
+            });
+
+            $J_pull_credit_cancel.addEventListener('click', function() {
+                hideModal();
+            });
+
+            $J_pull_credit_submit.addEventListener('click', function() {
+                const valid = validatePullCreditForm();
+                if(valid) {
+                    hideModal();
+                    showCreditReport();
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
